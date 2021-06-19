@@ -1,6 +1,7 @@
 import { useReactiveRef } from '@lyonph/preact-hooks';
 import {
   Ref,
+  useDebugValue,
   useEffect,
   useState,
 } from 'preact/hooks';
@@ -52,8 +53,12 @@ export default function useLaze<T extends HTMLElement>(): Laze<T> {
     return undefined;
   }, [current]);
 
-  return {
+  const value = {
     ref,
     visible,
   };
+
+  useDebugValue(value);
+
+  return value;
 }
