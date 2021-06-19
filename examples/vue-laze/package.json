@@ -19,5 +19,9 @@
     "typescript": "^4.3.2",
     "vite": "^2.3.7",
     "vue-tsc": "^0.0.24"
+  },
+  "private": true,
+  "publishConfig": {
+    "access": "restricted"
   }
 }
