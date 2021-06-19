@@ -1,6 +1,6 @@
 {
   "name": "preact-laze-vite",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "license": "MIT",
   "scripts": {
     "dev": "vite",
@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "preact": "^10.5.13",
-    "preact-laze": "0.0.0"
+    "preact-laze": "0.1.0"
   },
   "devDependencies": {
     "@preact/preset-vite": "^2.0.0",
