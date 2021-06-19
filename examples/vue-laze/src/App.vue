@@ -10,7 +10,7 @@
       </button>
     </div>
     <div :key="remount">
-      <template v-for="index in 1000">
+      <template v-for="index in 1000" :key="index">
         <Lazy :value="index" />
       </template>
     </div>
