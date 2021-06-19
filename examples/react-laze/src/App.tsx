@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
 import useLaze from 'react-laze';
 
-function Lazy(): JSX.Element {
+interface LazyProps {
+  value: number;
+}
+
+function Lazy({ value }: LazyProps): JSX.Element {
   const { ref, visible } = useLaze<HTMLDivElement>();
 
   return (
     <h1 ref={ref} className={visible ? 'visible' : 'hidden'}>
-      I am now visible!
+      {`Item #${value} is now visible!`}
     </h1>
   );
 }
@@ -16,7 +20,7 @@ function App(): JSX.Element {
 
   return (
     <div>
-      <div>
+      <div className="reset-container">
         <button
           type="button"
           className="reset"
@@ -31,8 +35,8 @@ function App(): JSX.Element {
       </div>
       <div key={remount}>
         {
-          [...(new Array<never>(1000))].map(() => (
-            <Lazy />
+          [...(new Array<never>(1000))].map((_, index) => (
+            <Lazy value={index} />
           ))
         }
       </div>
