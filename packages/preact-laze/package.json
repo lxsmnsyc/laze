@@ -16,7 +16,11 @@
   },
   "license": "MIT",
   "keywords": [
-    "pridepack"
+    "pridepack",
+    "preact",
+    "lazy-load",
+    "idle-until-urgent",
+    "lazy"
   ],
   "name": "preact-laze",
   "devDependencies": {

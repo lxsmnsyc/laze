@@ -16,7 +16,11 @@
   },
   "license": "MIT",
   "keywords": [
-    "pridepack"
+    "pridepack",
+    "vue",
+    "lazy-load",
+    "idle-until-urgent",
+    "lazy"
   ],
   "name": "vue-laze",
   "devDependencies": {
@@ -42,5 +46,16 @@
     "test": "pridepack test --passWithNoTests",
     "clean": "pridepack clean",
     "watch": "pridepack watch"
-  }
+  },
+  "description": "Lazily render components in React",
+  "repository": "https://github.com/LXSMNSYC/laze.git",
+  "bugs": {
+    "url": "https://github.com/LXSMNSYC/laze/issues"
+  },
+  "homepage": "https://github.com/LXSMNSYC/laze/tree/main/packages/vue-laze",
+  "publishConfig": {
+    "access": "public"
+  },
+  "author": "Alexis Munsayac <alexis.munsayac@gmail.com>",
+  "private": false
 }
