@@ -4,7 +4,7 @@
   </h1>
 </template>
 <script lang="ts">
-  import { toRefs } from 'vue';
+  import { inject, Ref, toRefs } from 'vue';
   import useLaze from 'vue-laze';
 
   export default {
@@ -18,7 +18,11 @@
     setup(props) {
       const { value } = toRefs(props);
 
-      const { ref: container, visible } = useLaze<HTMLDivElement>();
+      const refresh: Ref<boolean> = inject('refresh');
+
+      const { ref: container, visible } = useLaze<HTMLDivElement>({
+        refresh,
+      });
 
       return {
         value,

@@ -1,4 +1,4 @@
-import { useReactiveRef } from '@lyonph/preact-hooks';
+import { useFreshLazyRef, useReactiveRef } from '@lyonph/preact-hooks';
 import {
   Ref,
   useDebugValue,
@@ -11,7 +11,13 @@ export interface Laze<T extends HTMLElement> {
   visible: boolean;
 }
 
-export default function useLaze<T extends HTMLElement>(): Laze<T> {
+export interface LazeOptions {
+  refresh?: boolean;
+}
+
+export default function useLaze<T extends HTMLElement>(
+  options?: LazeOptions,
+): Laze<T> {
   const [visible, setVisible] = useState(false);
 
   // We use a reactive ref here so that the component
@@ -24,6 +30,8 @@ export default function useLaze<T extends HTMLElement>(): Laze<T> {
   // and we need to track whenever it changes.
   const { current } = ref;
 
+  const refreshRef = useFreshLazyRef(() => options?.refresh, options?.refresh);
+
   useEffect(() => {
     // If the host changed, make sure that
     // visibility is set to false
@@ -32,12 +40,16 @@ export default function useLaze<T extends HTMLElement>(): Laze<T> {
     if (current) {
       const observer = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
-          if (entry.target === current && entry.isIntersecting) {
-            // Host intersected, set visibility to true
-            setVisible(true);
+          if (entry.target === current) {
+            if (refreshRef.current) {
+              setVisible(entry.isIntersecting);
+            } else if (entry.isIntersecting) {
+              // Host intersected, set visibility to true
+              setVisible(true);
 
-            // Stop observing
-            observer.disconnect();
+              // Stop observing
+              observer.disconnect();
+            }
           }
         });
       });
@@ -51,7 +63,7 @@ export default function useLaze<T extends HTMLElement>(): Laze<T> {
     }
 
     return undefined;
-  }, [current]);
+  }, [current, refreshRef]);
 
   const value = {
     ref,

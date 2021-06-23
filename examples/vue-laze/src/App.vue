@@ -1,13 +1,22 @@
 <template>
   <div>
     <div className="reset-container">
-      <button
-        type="button"
-        className="reset"
-        @click="onClick"
-      >
-        Remount!
-      </button>
+      <div className="reset-buttons">
+        <button
+          type="button"
+          className="reset"
+          @click="onRemount"
+        >
+          Remount!
+        </button>
+        <button
+          type="button"
+          className="reset"
+          @click="onRefresh"
+        >
+          {{`Refresh: ${refresh ? 'On' : 'Off'}`}}
+        </button>
+      </div>
     </div>
     <div :key="remount">
       <template v-for="index in 1000" :key="index">
@@ -17,21 +26,30 @@
   </div>
 </template>
 <script lang="ts">
-  import { ref } from 'vue';
+  import { provide, ref } from 'vue';
   import Lazy from './Lazy.vue';
 
   export default {
     name: 'App',
     setup() {
       const remount = ref('A');
+      const refresh = ref(false);
 
-      function onClick() {
+      function onRemount() {
         remount.value = remount.value === 'A' ? 'B' : 'A';
       }
 
+      function onRefresh() {
+        refresh.value = !refresh.value;
+      }
+
+      provide('refresh', refresh);
+
       return {
         remount,
-        onClick,
+        refresh,
+        onRemount,
+        onRefresh,
       };
     },
     components: {
@@ -50,18 +68,33 @@
   }
 
   .reset-container {
-    position: fixed;
+    position: sticky;
 
     top: 0px;
-    right: 0px;
+
+    width: 100%;
+    height: auto;
 
     z-index: 50;
+
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  }
+
+  .reset-buttons {
+    backdrop-filter: blur(8px);
+
+    margin: 0.5rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
   }
 
   .reset {
     position: relative;
 
-    margin: 1rem;
+    margin: 0.5rem;
+
     padding: 0.5rem;
     border-radius: 0.5rem;
 
@@ -73,19 +106,6 @@
     cursor: pointer;
 
     transition: background 200ms, transform 200ms;
-  }
-
-  .reset:after {
-    content: '';
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    background: inherit;
-    top: 0.5rem;
-    filter: blur(0.4rem);
-    opacity: 0.7;
-    z-index: -1;
-    left: 0px;
   }
 
   .reset:hover {

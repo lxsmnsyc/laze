@@ -11,7 +11,13 @@ export interface Laze<T extends HTMLElement> {
   visible: Ref<boolean>;
 }
 
-export default function useLaze<T extends HTMLElement>(): Laze<T> {
+export interface LazeOptions {
+  refresh?: boolean | Ref<boolean>;
+}
+
+export default function useLaze<T extends HTMLElement>(
+  options?: LazeOptions,
+): Laze<T> {
   const visible = ref(false);
 
   // We use a reactive ref here so that the component
@@ -19,21 +25,27 @@ export default function useLaze<T extends HTMLElement>(): Laze<T> {
   // re-evaluating our intersection logic
   const container = ref<T | null>(null);
 
-  // We need to destructure here since
-  // the host element is our dependency,
-  // and we need to track whenever it changes.
-
   watchEffect(() => {
     // If the host changed, make sure that
     // visibility is set to false
     visible.value = false;
+
+    let refresh = false;
+
+    if (options && options.refresh) {
+      refresh = typeof options.refresh === 'boolean'
+        ? options.refresh
+        : options.refresh.value;
+    }
 
     if (container.value) {
       const current = container.value;
 
       const observer = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
-          if (entry.target === current && entry.isIntersecting) {
+          if (refresh) {
+            visible.value = entry.isIntersecting;
+          } else if (entry.isIntersecting) {
             // Host intersected, set visibility to true
             visible.value = true;
 
