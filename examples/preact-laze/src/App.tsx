@@ -1,6 +1,6 @@
 import { useState, useContext } from 'preact/hooks';
 import useLaze from 'preact-laze';
-import { createContext } from 'preact';
+import { createContext, JSX } from 'preact';
 
 const RefreshContext = createContext(false);
 
