@@ -1,0 +1,62 @@
+{
+  "version": "0.2.0",
+  "types": "dist/types/index.d.ts",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "exports": {
+    "require": "./dist/cjs/index.js",
+    "import": "./dist/esm/index.js"
+  },
+  "files": [
+    "dist",
+    "src"
+  ],
+  "engines": {
+    "node": ">=10"
+  },
+  "license": "MIT",
+  "keywords": [
+    "pridepack",
+    "solid",
+    "lazy-load",
+    "idle-until-urgent",
+    "lazy"
+  ],
+  "name": "solid-laze",
+  "devDependencies": {
+    "@types/node": "^15.12.4",
+    "@types/react": "^17.0.11",
+    "eslint": "^7.29.0",
+    "eslint-config-lxsmnsyc": "^0.2.3",
+    "pridepack": "^0.10.0",
+    "solid-js": "^1.1.0",
+    "tslib": "^2.3.0",
+    "typescript": "^4.3.4"
+  },
+  "peerDependencies": {
+    "solid-js": "^1.1.0"
+  },
+  "scripts": {
+    "prepublish": "pridepack clean && pridepack build",
+    "build": "pridepack build",
+    "type-check": "pridepack check",
+    "lint": "pridepack lint",
+    "test": "pridepack test --passWithNoTests",
+    "clean": "pridepack clean",
+    "watch": "pridepack watch"
+  },
+  "dependencies": {
+    "@lyonph/react-hooks": "^0.5.1"
+  },
+  "description": "Lazily render components in Solid",
+  "repository": "https://github.com/LXSMNSYC/laze.git",
+  "bugs": {
+    "url": "https://github.com/LXSMNSYC/laze/issues"
+  },
+  "homepage": "https://github.com/LXSMNSYC/laze/tree/main/packages/solid-laze",
+  "publishConfig": {
+    "access": "public"
+  },
+  "author": "Alexis Munsayac <alexis.munsayac@gmail.com>",
+  "private": false
+}
