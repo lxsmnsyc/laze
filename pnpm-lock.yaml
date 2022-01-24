@@ -20,9 +20,9 @@ importers:
       eslint: ^8.7.0
       eslint-config-lxsmnsyc: ^0.4.0
       preact: ^10.5.13
-      preact-laze: 0.3.0
+      preact-laze: 0.3.1
       typescript: ^4.3.2
-      vite: ^2.3.7
+      vite: ^2.7.13
     dependencies:
       preact: 10.6.4
       preact-laze: link:../../packages/preact-laze
@@ -42,9 +42,9 @@ importers:
       eslint-config-lxsmnsyc: ^0.4.0
       react: ^17.0.0
       react-dom: ^17.0.0
-      react-laze: 0.3.0
+      react-laze: 0.3.1
       typescript: ^4.3.2
-      vite: ^2.3.7
+      vite: ^2.7.13
     dependencies:
       react: 17.0.2
       react-dom: 17.0.2_react@17.0.2
@@ -60,12 +60,12 @@ importers:
 
   examples/solid-laze:
     specifiers:
-      babel-preset-solid: ^1.1.1
-      solid-js: ^1.1.1
-      solid-laze: 0.3.0
+      babel-preset-solid: ^1.3.2
+      solid-js: ^1.3.3
+      solid-laze: 0.3.1
       typescript: ^4.3.2
-      vite: ^2.4.4
-      vite-plugin-solid: ^2.0.1
+      vite: ^2.7.13
+      vite-plugin-solid: ^2.2.4
     dependencies:
       solid-js: 1.3.3
       solid-laze: link:../../packages/solid-laze
@@ -82,9 +82,9 @@ importers:
       eslint: ^8.7.0
       eslint-config-lxsmnsyc: ^0.4.0
       typescript: ^4.3.2
-      vite: ^2.3.7
+      vite: ^2.7.13
       vue: ^3.2.19
-      vue-laze: 0.3.0
+      vue-laze: 0.3.1
       vue-tsc: ^0.3.0
     dependencies:
       vue: 3.2.29
