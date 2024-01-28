@@ -1,6 +1,8 @@
 {
+  "jsx": "automatic",
+  "jsxImportSource": "react",
   "jest": {
     "testEnvironment": "jsdom"
   },
-  "target": "es2017"
+  "target": "ES2018"
 }

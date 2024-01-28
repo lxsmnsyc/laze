@@ -1,10 +1,6 @@
-import { useFreshLazyRef, useReactiveRef } from '@lyonph/react-hooks';
-import {
-  MutableRefObject,
-  useDebugValue,
-  useEffect,
-  useState,
-} from 'react';
+import type { MutableRefObject } from 'react';
+import { useDebugValue, useEffect, useState } from 'react';
+import useReactiveRef from './useReactiveRef';
 
 export interface Laze<T extends HTMLElement> {
   ref: MutableRefObject<T | null>;
@@ -30,7 +26,7 @@ export default function useLaze<T extends HTMLElement>(
   // and we need to track whenever it changes.
   const { current } = ref;
 
-  const refreshRef = useFreshLazyRef(() => options?.refresh, options?.refresh);
+  const shouldRefresh = options?.refresh;
 
   useEffect(() => {
     // If the host changed, make sure that
@@ -38,20 +34,18 @@ export default function useLaze<T extends HTMLElement>(
     setVisible(false);
 
     if (current) {
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (entry.target === current) {
-            if (refreshRef.current) {
-              setVisible(entry.isIntersecting);
-            } else if (entry.isIntersecting) {
-              // Host intersected, set visibility to true
-              setVisible(true);
+      const observer = new IntersectionObserver(entries => {
+        for (const entry of entries) {
+          if (shouldRefresh) {
+            setVisible(entry.isIntersecting);
+          } else if (entry.isIntersecting) {
+            // Host intersected, set visibility to true
+            setVisible(true);
 
-              // Stop observing
-              observer.disconnect();
-            }
+            // Stop observing
+            observer.disconnect();
           }
-        });
+        }
       });
 
       observer.observe(current);
@@ -63,7 +57,7 @@ export default function useLaze<T extends HTMLElement>(
     }
 
     return undefined;
-  }, [current, refreshRef]);
+  }, [current, shouldRefresh]);
 
   const value = {
     ref,

@@ -1,9 +1,4 @@
-import {
-  createEffect,
-  createSignal,
-  onCleanup,
-  untrack,
-} from 'solid-js';
+import { createEffect, createSignal, onCleanup } from 'solid-js';
 
 export interface Laze<T extends HTMLElement> {
   ref: (value: T) => void;
@@ -28,32 +23,32 @@ export default function useLaze<T extends HTMLElement>(
     // If the host changed, make sure that
     // visibility is set to false
     setVisible(false);
+    const shouldRefresh = options?.refresh;
 
     const current = ref();
-    if (current) {
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (entry.target === current) {
-            if (untrack(() => options?.refresh)) {
-              setVisible(entry.isIntersecting);
-            } else if (entry.isIntersecting) {
-              // Host intersected, set visibility to true
-              setVisible(true);
-
-              // Stop observing
-              observer.disconnect();
-            }
-          }
-        });
-      });
-
-      observer.observe(current);
-
-      onCleanup(() => {
-        observer.unobserve(current);
-        observer.disconnect();
-      });
+    if (!current) {
+      return;
     }
+    const observer = new IntersectionObserver(entries => {
+      for (const entry of entries) {
+        if (shouldRefresh) {
+          setVisible(entry.isIntersecting);
+        } else if (entry.isIntersecting) {
+          // Host intersected, set visibility to true
+          setVisible(true);
+
+          // Stop observing
+          observer.disconnect();
+        }
+      }
+    });
+
+    observer.observe(current);
+
+    onCleanup(() => {
+      observer.unobserve(current);
+      observer.disconnect();
+    });
   });
 
   return {

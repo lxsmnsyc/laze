@@ -1,19 +1,23 @@
-import { createContext, useContext, createSignal, JSX } from 'solid-js';
+import type { JSX } from 'solid-js';
+import { createContext, createSignal, useContext } from 'solid-js';
 import useLaze from 'solid-laze';
 
-const RefreshContext = createContext(false);
+const RefreshContext = createContext<() => boolean>(() => false);
 
 interface LazyProps {
   value: number;
 }
 
 function Lazy(props: LazyProps): JSX.Element {
+  const refresh = useContext(RefreshContext);
   const laze = useLaze<HTMLDivElement>({
-    refresh: useContext(RefreshContext),
+    get refresh() {
+      return refresh();
+    },
   });
 
   return (
-    <h1 ref={laze.ref} className={laze.visible ? 'visible' : 'hidden'}>
+    <h1 ref={laze.ref} class={laze.visible ? 'visible' : 'hidden'}>
       {`Item #${props.value} is now visible!`}
     </h1>
   );
@@ -25,11 +29,11 @@ function App(): JSX.Element {
 
   return (
     <div>
-      <div className="reset-container">
-        <div className="reset-buttons">
+      <div class="reset-container">
+        <div class="reset-buttons">
           <button
             type="button"
-            className="reset"
+            class="reset"
             onClick={() => {
               setRemount(false);
               setRemount(true);
@@ -39,7 +43,7 @@ function App(): JSX.Element {
           </button>
           <button
             type="button"
-            className="reset"
+            class="reset"
             onClick={() => {
               setRefresh(!refresh());
             }}
@@ -48,19 +52,15 @@ function App(): JSX.Element {
           </button>
         </div>
       </div>
-      {
-        remount() && (
-          <div>
-            <RefreshContext.Provider value={refresh()}>
-              {
-                [...(new Array<never>(1000))].map((_, index) => (
-                  <Lazy value={index} />
-                ))
-              }
-            </RefreshContext.Provider>
-          </div>
-        )
-      }
+      {remount() && (
+        <div>
+          <RefreshContext.Provider value={refresh}>
+            {[...new Array<never>(1000)].map((_, index) => (
+              <Lazy value={index} />
+            ))}
+          </RefreshContext.Provider>
+        </div>
+      )}
     </div>
   );
 }

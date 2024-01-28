@@ -32,13 +32,11 @@
   ],
   "name": "vue-laze",
   "devDependencies": {
-    "@types/node": "^18.7.3",
-    "eslint": "^8.22.0",
-    "eslint-config-lxsmnsyc": "^0.4.8",
-    "pridepack": "^2.3.0",
-    "tslib": "^2.4.0",
-    "typescript": "^4.7.4",
-    "vue": "^3.2.37"
+    "@types/node": "^20.11.5",
+    "pridepack": "2.6.0",
+    "tslib": "^2.6.2",
+    "typescript": "^5.3.3",
+    "vue": "^3.4.15"
   },
   "peerDependencies": {
     "vue": "^3.0"
@@ -47,8 +45,6 @@
     "prepublish": "pridepack clean && pridepack build",
     "build": "pridepack build",
     "type-check": "pridepack check",
-    "lint": "pridepack lint",
-    "test": "pridepack test --passWithNoTests",
     "clean": "pridepack clean",
     "watch": "pridepack watch"
   },

@@ -1,10 +1,5 @@
-import {
-  readonly,
-  Ref,
-  ref,
-  UnwrapRef,
-  watchEffect,
-} from 'vue';
+import type { Ref, UnwrapRef } from 'vue';
+import { readonly, ref, watchEffect } from 'vue';
 
 export interface Laze<T extends HTMLElement> {
   ref: Ref<UnwrapRef<T> | null>;
@@ -25,7 +20,7 @@ export default function useLaze<T extends HTMLElement>(
   // re-evaluating our intersection logic
   const container = ref<T | null>(null);
 
-  watchEffect(() => {
+  watchEffect(onCleanup => {
     // If the host changed, make sure that
     // visibility is set to false
     visible.value = false;
@@ -33,16 +28,17 @@ export default function useLaze<T extends HTMLElement>(
     let refresh = false;
 
     if (options && options.refresh) {
-      refresh = typeof options.refresh === 'boolean'
-        ? options.refresh
-        : options.refresh.value;
+      refresh =
+        typeof options.refresh === 'boolean'
+          ? options.refresh
+          : options.refresh.value;
     }
 
     if (container.value) {
       const current = container.value;
 
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
+      const observer = new IntersectionObserver(entries => {
+        for (const entry of entries) {
           if (refresh) {
             visible.value = entry.isIntersecting;
           } else if (entry.isIntersecting) {
@@ -52,22 +48,20 @@ export default function useLaze<T extends HTMLElement>(
             // Stop observing
             observer.disconnect();
           }
-        });
+        }
       });
 
       observer.observe(current);
 
-      return () => {
+      onCleanup(() => {
         observer.unobserve(current);
         observer.disconnect();
-      };
+      });
     }
-
-    return undefined;
   });
 
   return {
     ref: container,
     visible: readonly(visible),
-  }
+  };
 }

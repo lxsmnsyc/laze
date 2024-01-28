@@ -1,5 +1,6 @@
 {
   "name": "preact-laze-vite",
+  "type": "module",
   "version": "0.4.0",
   "license": "MIT",
   "scripts": {
@@ -8,15 +9,13 @@
     "serve": "vite preview"
   },
   "dependencies": {
-    "preact": "^10.10.2",
+    "preact": "^10.19.3",
     "preact-laze": "0.4.0"
   },
   "devDependencies": {
-    "@preact/preset-vite": "^2.3.0",
-    "eslint": "^8.22.0",
-    "eslint-config-lxsmnsyc": "^0.4.8",
-    "typescript": "^4.7.4",
-    "vite": "^3.0.7"
+    "@preact/preset-vite": "^2.8.1",
+    "typescript": "^5.3.3",
+    "vite": "^5.0.12"
   },
   "private": true,
   "publishConfig": {

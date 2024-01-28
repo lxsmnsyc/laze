@@ -1,4 +1,5 @@
-import React, { createContext, useContext, useState } from 'react';
+import type { JSX } from 'react';
+import { createContext, useContext, useState } from 'react';
 import useLaze from 'react-laze';
 
 const RefreshContext = createContext(false);
@@ -31,9 +32,7 @@ function App(): JSX.Element {
             type="button"
             className="reset"
             onClick={() => {
-              setRemount(
-                remount === 'A' ? 'B' : 'A',
-              );
+              setRemount(remount === 'A' ? 'B' : 'A');
             }}
           >
             Remount!
@@ -51,11 +50,9 @@ function App(): JSX.Element {
       </div>
       <div key={remount}>
         <RefreshContext.Provider value={refresh}>
-          {
-            [...(new Array<never>(1000))].map((_, index) => (
-              <Lazy value={index} />
-            ))
-          }
+          {[...new Array<never>(1000)].map((_, index) => (
+            <Lazy value={index} />
+          ))}
         </RefreshContext.Provider>
       </div>
     </div>

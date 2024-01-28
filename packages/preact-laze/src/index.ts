@@ -1,2 +1,2 @@
-export { default } from './useLaze';
 export * from './useLaze';
+export { default } from './useLaze';

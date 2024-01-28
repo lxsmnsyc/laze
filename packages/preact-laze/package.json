@@ -31,28 +31,20 @@
   ],
   "name": "preact-laze",
   "devDependencies": {
-    "@types/node": "^18.7.3",
-    "eslint": "^8.22.0",
-    "eslint-config-lxsmnsyc": "^0.4.8",
-    "preact": "^10.10.2",
-    "pridepack": "^2.3.0",
-    "tslib": "^2.4.0",
-    "typescript": "^4.7.4"
+    "@types/node": "^20.11.5",
+    "preact": "^10.19.3",
+    "pridepack": "2.6.0",
+    "tslib": "^2.6.2",
+    "typescript": "^5.3.3"
   },
   "peerDependencies": {
-    "preact": "^10.0.0"
+    "preact": "^10"
   },
   "scripts": {
     "prepublish": "pridepack clean && pridepack build",
     "build": "pridepack build",
     "type-check": "pridepack check",
-    "lint": "pridepack lint",
-    "test": "pridepack test --passWithNoTests",
-    "clean": "pridepack clean",
-    "watch": "pridepack watch"
-  },
-  "dependencies": {
-    "@lyonph/preact-hooks": "^0.7.0"
+    "clean": "pridepack clean"
   },
   "description": "Lazily render components in React",
   "repository": "https://github.com/LXSMNSYC/laze.git",
