@@ -1,5 +1,5 @@
 {
-  "version": "0.4.0",
+  "version": "0.5.0",
   "type": "module",
   "types": "./dist/types/index.d.ts",
   "main": "./dist/cjs/production/index.cjs",
@@ -15,12 +15,21 @@
       "types": "./dist/types/index.d.ts"
     }
   },
-  "files": ["dist", "src"],
+  "files": [
+    "dist",
+    "src"
+  ],
   "engines": {
     "node": ">=10"
   },
   "license": "MIT",
-  "keywords": ["pridepack", "react", "lazy-load", "idle-until-urgent", "lazy"],
+  "keywords": [
+    "pridepack",
+    "react",
+    "lazy-load",
+    "idle-until-urgent",
+    "lazy"
+  ],
   "name": "react-laze",
   "devDependencies": {
     "@types/node": "^20.11.5",
